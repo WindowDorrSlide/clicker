@@ -7,7 +7,6 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
  * Viktigt: queryselector ger oss ett html element eller flera om det finns.
  */
-const clickerButton = document.querySelector('#game-button');
 const moneyTracker = document.querySelector('#money');
 const mpsTracker = document.querySelector('#mps'); // money per second
 const mpcTracker = document.querySelector('#mpc'); // money per click
@@ -68,17 +67,6 @@ let achievements = [
  * money.
  * Läs mer: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
  */
-clickerButton.addEventListener(
-    'click',
-    () => {
-        // vid click öka score med moneyPerClick
-        money += moneyPerClick;
-        // håll koll på hur många gånger spelaren klickat
-        numberOfClicks += 1;
-        // console.log(clicker.score);
-    },
-    false
-);
 
 /* För att driva klicker spelet så kommer vi att använda oss av en metod som heter
  * requestAnimationFrame.
@@ -161,28 +149,34 @@ window.addEventListener('load', (event) => {
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer
  */
+
 upgrades = [
-    {
-        name: 'Sop',
-        cost: 10,
-        amount: 1,
-    },
-    {
-        name: 'Kvalitetsspade',
-        cost: 50,
-        clicks: 2,
-    },
-    {
-        name: 'Skottkärra',
-        cost: 100,
-        amount: 10,
-    },
-    {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
-    },
-];
+    { 'name': 'E', 'cost': 1 ** 2, 'amount': 1 ** 2 },
+    { 'name': 'T', 'cost': 2 ** 2, 'amount': 2 ** 2 },
+    { 'name': 'A', 'cost': 3 ** 2, 'amount': 3 ** 2 },
+    { 'name': 'O', 'cost': 4 ** 2, 'amount': 4 ** 2 },
+    { 'name': 'I', 'cost': 5 ** 2, 'amount': 5 ** 2 },
+    { 'name': 'N', 'cost': 6 ** 2, 'amount': 6 ** 2 },
+    { 'name': 'S', 'cost': 7 ** 2, 'amount': 7 ** 2 },
+    { 'name': 'H', 'cost': 8 ** 2, 'amount': 8 ** 2 },
+    { 'name': 'R', 'cost': 9 ** 2, 'amount': 9 ** 2 },
+    { 'name': 'D', 'cost': 10 ** 2, 'amount': 10 ** 2 },
+    { 'name': 'L', 'cost': 11 ** 2, 'amount': 11 ** 2 },
+    { 'name': 'C', 'cost': 12 ** 2, 'amount': 12 ** 2 },
+    { 'name': 'U', 'cost': 13 ** 2, 'amount': 13 ** 2 },
+    { 'name': 'M', 'cost': 14 ** 2, 'amount': 14 ** 2 },
+    { 'name': 'W', 'cost': 15 ** 2, 'amount': 15 ** 2 },
+    { 'name': 'F', 'cost': 16 ** 2, 'amount': 16 ** 2 },
+    { 'name': 'Y', 'cost': 17 ** 2, 'amount': 17 ** 2 },
+    { 'name': 'P', 'cost': 18 ** 2, 'amount': 18 ** 2 },
+    { 'name': 'B', 'cost': 19 ** 2, 'amount': 19 ** 2 },
+    { 'name': 'V', 'cost': 20 ** 2, 'amount': 20 ** 2 },
+    { 'name': 'K', 'cost': 21 ** 2, 'amount': 21 ** 2 },
+    { 'name': 'J', 'cost': 22 ** 2, 'amount': 22 ** 2 },
+    { 'name': 'X', 'cost': 23 ** 2, 'amount': 23 ** 2 },
+    { 'name': 'Q', 'cost': 24 ** 2, 'amount': 24 ** 2 },
+    { 'name': 'Z', 'cost': 25 ** 2, 'amount': 25 ** 2 },
+]
 
 /* createCard är en funktion som tar ett upgrade objekt som parameter och skapar
  * ett html kort för det.
@@ -213,7 +207,7 @@ function createCard(upgrade) {
     } else {
         header.textContent = `${upgrade.name}, +${upgrade.clicks} per klick.`;
     }
-    cost.textContent = `Köp för ${upgrade.cost} benbitar.`;
+    cost.textContent = `Köp för ${upgrade.cost} letters.`;
 
     card.addEventListener('click', (e) => {
         if (money >= upgrade.cost) {
