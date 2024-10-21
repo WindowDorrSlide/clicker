@@ -8,16 +8,36 @@ window.onload = function() {
     console.log(towrite);
 }
 
+let alt = false
 document.addEventListener('keydown',
     (e) => {
-        if (e.keyCode == 32 && e.target == document.body) {
+        if (e.altKey) {
+            alt = true
             e.preventDefault();
+        }
+        if (e.key === "Tab" || e.key === " ") {
+            e.preventDefault();
+        }
+        console.debug("alt", alt);
+        if (alt) {
+            alt = false;
+            if (e.key === "Escape") {
+                return
+            }
+            upgrades.forEach((upgrade) => {
+                console.debug(upgrade);
+                if (upgrade.name === e.key.toUpperCase()) {
+                    console.debug("buying upgrade", upgrade);
+                    buyUpgrade(upgrade);
+                    return
+                }
+            });
         }
 
         const pressed = e.key
         const nextKey = towrite.textContent.charAt(0);
-        console.debug("pressed", pressed, "nextKey", nextKey, "equal", pressed !== nextKey);
-        if (pressed != nextKey) {
+        console.debug("pressed", pressed, typeof (pressed), "nextKey", nextKey, typeof (nextKey), "equal", pressed !== nextKey);
+        if (pressed !== nextKey) {
             return;
         }
         written.textContent += pressed;
@@ -42,6 +62,10 @@ document.addEventListener('keydown',
     },
     false
 );
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function generateLoremText(numWords) {
     let loremText = '';

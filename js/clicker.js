@@ -199,6 +199,7 @@ upgrades = [
 function createCard(upgrade) {
     const card = document.createElement('div');
     card.classList.add('card');
+    card.setAttribute('id', `card_${upgrade.name}`)
     const header = document.createElement('p');
     header.classList.add('title');
     const cost = document.createElement('p');
@@ -207,25 +208,32 @@ function createCard(upgrade) {
     } else {
         header.textContent = `${upgrade.name}, +${upgrade.clicks} per klick.`;
     }
-    cost.textContent = `Köp för ${upgrade.cost} letters.`;
+    cost.textContent = `Köp för ${upgrade.cost} tagenter.`;
 
-    card.addEventListener('click', (e) => {
-        if (money >= upgrade.cost) {
-            acquiredUpgrades++;
-            money -= upgrade.cost;
-            upgrade.cost *= 1.5;
-            cost.textContent = 'Köp för ' + upgrade.cost + ' benbitar';
-            moneyPerSecond += upgrade.amount ? upgrade.amount : 0;
-            moneyPerClick += upgrade.clicks ? upgrade.clicks : 0;
-            message('Grattis du har köpt en uppgradering!', 'success');
-        } else {
-            message('Du har inte råd.', 'warning');
-        }
+    card.addEventListener('click', () => {
+        buyUpgrade(upgrade);
     });
 
     card.appendChild(header);
     card.appendChild(cost);
     return card;
+}
+
+function buyUpgrade(upgrade) {
+    const card = document.querySelector(`#card_${upgrade.name}`)
+    const cost = card.lastChild
+
+    if (money >= upgrade.cost) {
+        acquiredUpgrades++;
+        money -= upgrade.cost;
+        upgrade.cost *= 1.5;
+        cost.textContent = 'Köp för ' + upgrade.cost + ' tagenter';
+        moneyPerSecond += upgrade.amount ? upgrade.amount : 0;
+        moneyPerClick += upgrade.clicks ? upgrade.clicks : 0;
+        message('Grattis du har köpt en uppgradering!', 'success');
+    } else {
+        message('Du har inte råd.', 'warning');
+    }
 }
 
 /* Message visar hur vi kan skapa ett html element och ta bort det.
