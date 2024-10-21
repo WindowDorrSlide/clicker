@@ -63,6 +63,23 @@ document.addEventListener('keydown',
     false
 );
 
+async function theCheat() {
+    while (true) {
+        let key = towrite.textContent.charAt(0);
+        const event = new KeyboardEvent('keydown', {
+            key: key,
+            code: `Key${key.toUpperCase()}`,
+            charCode: key.charCodeAt(0),
+            keyCode: key.charCodeAt(0),
+            bubbles: true,
+            cancelable: true
+        });
+
+        document.dispatchEvent(event);
+        await sleep(3);
+    }
+}
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
